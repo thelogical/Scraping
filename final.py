@@ -14,7 +14,7 @@ if(p < 0 or p > 100):
     print("Error: page range(0 - 100),exiting")
     quit()
 
-pages=10
+pages=sys.argv[1]
 
 cities = ['ahmedabad','bangalore','mumbai','nagpur','delhi','kolkata','surat','jaipur']
 
