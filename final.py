@@ -2,17 +2,35 @@ import json
 import urllib2
 import re
 import requests
+import os
+import sys
+
+if(len(sys.argv) < 0):
+    print("Usage: python /path/to/final.py pages city")
+    quit()
+
+p = int(sys.argv[1])
+if(p < 0 or p > 100):
+    print("Error: page range(0 - 100),exiting")
+    quit()
 
 pages=10
 
 cities = ['ahmedabad','bangalore','mumbai','nagpur','delhi','kolkata','surat','jaipur']
-ind=1
 
-f = open("/home/cryptik/bwdata.txt",'w')
-f2 = open("/home/cryptik/burls.txt",'w')
+if(sys.argv[2] not in cities):
+    print("valid cities=>",cities)
+    quit()
+
+city = sys.argv[1]
+
+os.chdir("data")
+
+f = open("bwdata.txt",'w')
+f2 = open("burls.txt",'w')
 base = "https://photographers.canvera.com"                             
 for i in range(0,pages):
-    url="https://photographers.canvera.com/getphjson?photographer_url=/"+cities[1]+"&location=&categoryFilter=&budget=&tab=all&isCategory=false&categoryName=wedding&withoutimage=false&withoutbudget=false&sortbyprice=&sortbydefault=false&sortbytopview=false&sortbypopularity=false&sortbyuserratings=true&p="+str(i)+"&includeVideographer=no"
+    url="https://photographers.canvera.com/getphjson?photographer_url=/"+city+"&location=&categoryFilter=&budget=&tab=all&isCategory=false&categoryName=wedding&withoutimage=false&withoutbudget=false&sortbyprice=&sortbydefault=false&sortbytopview=false&sortbypopularity=false&sortbyuserratings=true&p="+str(i)+"&includeVideographer=no"
     response = urllib2.urlopen(url)
     data = json.load(response)
     for j in range(0,20):
@@ -24,8 +42,8 @@ f.close()
 f2.close()
 '''
 '''
-f = open("/home/cryptik/burls.txt",'r')
-f6 = open("/home/cryptik/burls2.txt",'w')
+f = open("burls.txt",'r')
+f6 = open("burls2.txt",'w')
 urls = f.readlines()
 
 for url in urls:
@@ -49,8 +67,8 @@ for url in urls:
 f.close()
 f6.close()
 
-f3 = open("/home/cryptik/burls2.txt",'r')
-f5 = open("/home/cryptik/bemails.txt",'w')
+f3 = open("burls2.txt",'r')
+f5 = open("bemails.txt",'w')
 urls = f3.readlines()
 f3.close()
 i = 1
@@ -80,14 +98,18 @@ for url in urls:
 
 f5.close()
 
-f = open('/home/cryptik/'+cities[ind]+'.txt','w')
-f2 = open('/home/cryptik/bwdata.txt','r')
-f3 = open('/home/cryptik/bemails.txt','r')
+f = open(city+'.txt','w')
+f2 = open('bwdata.txt','r')
+f3 = open('bemails.txt','r')
 rows = f2.readlines()
 emails = f3.readlines()
 for i in range(0,len(rows) - 1):
     f.write(rows[i][:-1]+","+emails[i][:-1]+'\n')
 
 f.close()
+os.remove('bwdata.txt')
+os.remove('bemails.txt')
+os.remove('urls.txt')
+os.remove('urls2.txt')
 
 
