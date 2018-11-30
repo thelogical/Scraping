@@ -1,5 +1,11 @@
 # Scraping
 
-Please change the index number at line 9 for selecting desired city.
+1.Install python 2.7 and make an empty directory 'Data'.Enter the directory and open the terminal in that directory.
 
-Edit number of pages (line 6) to tweak the number of required data rows(total = pages x 20)
+Usage:-
+
+python /path/to/final.py pages city
+
+pages must be between(1 and 100)
+city must be one of the following
+['ahmedabad','bangalore','mumbai','nagpur','delhi','kolkata','surat','jaipur']
